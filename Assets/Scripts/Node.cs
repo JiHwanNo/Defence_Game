@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class Node
+public class Node : IHeapItem<Node>
 {
+    public Node parent;
+
     public bool IsWalkable;
     public Vector3 worldPosition;
 
@@ -14,6 +16,7 @@ public class Node
 
     //비용의 총합
     public int Fcost { get => gCost + hCost; }
+    public int HeapIndex { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
     public Node(bool walkable, Vector3 pos, int x, int y)
     {
@@ -21,5 +24,19 @@ public class Node
         worldPosition = pos;
         gridX = x;
         gridY = y;
+    }
+
+    public int CompareTo(Node other)
+    {
+        /*      -1 : Fcost < other.Fcost(우선순위가 내가 높음)
+         *      0 : Fcost == other.Fcost(우선순위가 같음) 
+         *      -1 : Fcost > other.Fcost(우선순위가 other이 높음)      
+         */
+        int compare = Fcost.CompareTo(other.Fcost);
+        
+        if (compare == 0) // 같다면 hCost를 통해 비교하자.
+            compare = hCost.CompareTo(other.hCost);
+
+        return compare;
     }
 }
