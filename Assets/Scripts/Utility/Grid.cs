@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid : MonoBehaviour
+public class GRID : MonoBehaviour
 {
     public LayerMask unwalkableMask;
 
