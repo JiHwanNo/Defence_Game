@@ -5,12 +5,12 @@ using System.Collections;
 public class PathManager : MonoBehaviour
 {
     [SerializeField] PathRequestManager pathrequestMgr;
-    [SerializeField] private GRID grid;
+    [SerializeField] private _Grid grid;
 
     private void Awake()
     {
         pathrequestMgr = GetComponent<PathRequestManager>();
-        grid = GetComponent<GRID>();
+        grid = GetComponent<_Grid>();
     }
     public void StartFindPath(Vector3 startPos, Vector3 targetPos)
     {
@@ -22,7 +22,7 @@ public class PathManager : MonoBehaviour
 
         Vector3[] wayPoints = new Vector3[0];
         bool pathSuccess = false; // 길 탐색 성공여부
-        
+
         Node startNode = grid.GetNodeFromWorldPosition(seeker); // 출발 Node[x,y]
         Node targetNode = grid.GetNodeFromWorldPosition(target); // 도착 Node[x,y]
 
