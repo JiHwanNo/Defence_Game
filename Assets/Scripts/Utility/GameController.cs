@@ -7,12 +7,21 @@ public class GameController : Singleton<GameController>
     [HideInInspector] public UI_Base m_CrruntUI;
     public List<UI_Base> m_uiRootInfo = new List<UI_Base>();
 
+    private ObjectPool _objpool;
+
+    public ObjectPool ObjPool { get { return Instance._objpool; } }
+
     private void Awake()
     {
+        Object.DontDestroyOnLoad(transform);
+
+        _objpool = new ObjectPool();
+
         Screen.fullScreen = true;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
+        
     }
 
     private void Start()
@@ -22,7 +31,10 @@ public class GameController : Singleton<GameController>
 
     IEnumerator StartProcess()
     {
-        Update_GameState(GAMESTATE.MainPage);
+        _objpool.Init();
+        yield return null;
+
+        //Update_GameState(GAMESTATE.MainPage);
         yield return null;
     }
     

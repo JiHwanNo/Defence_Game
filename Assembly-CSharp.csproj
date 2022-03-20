@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\Utility\Heap.cs" />
     <Compile Include="Assets\Scripts\Utility\UI_Base.cs" />
     <Compile Include="Assets\Scripts\Page_Scripts\Main_UI.cs" />
+    <Compile Include="Assets\Scripts\Utility\_Grid.cs" />
     <Compile Include="Assets\Scripts\Utility\PathRequestManager.cs" />
     <Compile Include="Assets\Scripts\Utility\GameController.cs" />
     <Compile Include="Assets\Scripts\Utility\EnumManager.cs" />
@@ -70,7 +71,7 @@
     <Compile Include="Assets\Scripts\Utility\Node.cs" />
     <Compile Include="Assets\Scripts\Page_Scripts\Main_Field.cs" />
     <Compile Include="Assets\Scripts\Utility\PathManager.cs" />
-    <Compile Include="Assets\Scripts\Utility\_Grid.cs" />
+    <Compile Include="Assets\Scripts\Utility\ResouceManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

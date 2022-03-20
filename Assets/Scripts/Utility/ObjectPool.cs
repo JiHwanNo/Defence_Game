@@ -1,10 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool : Singleton<ObjectPool>
+public class ObjectPool
 {
-
     private Dictionary<GameObject, List<GameObject>> objectPools = new Dictionary<GameObject, List<GameObject>>(10);
+    Transform _root;
+
+    public void Init()
+    {
+        if (_root == null)
+        {
+            _root = new GameObject { name = "@Pool_Root" }.transform;
+            Object.DontDestroyOnLoad(_root);
+        }
+
+        objectPools = new Dictionary<GameObject, List<GameObject>>(10);
+
+    }
 
     public bool CreatePool(GameObject objToPool, int initialPoolSize)   // 만들고자하는 게임 오브젝트 및 개수
     {
@@ -19,9 +31,9 @@ public class ObjectPool : Singleton<ObjectPool>
 
         for (int i = 0; i < initialPoolSize; i++)
         {
-            GameObject nObj = Instantiate(objToPool, Vector3.zero, Quaternion.identity);
+            GameObject nObj = Object.Instantiate(objToPool, Vector3.zero, Quaternion.identity);
             nObj.SetActive(false);
-            nObj.transform.SetParent(transform);
+            nObj.transform.SetParent(_root);
             nPool.Add(nObj);
         }
 
@@ -56,7 +68,7 @@ public class ObjectPool : Singleton<ObjectPool>
             }
         }
 
-        GameObject nObj = Instantiate(objToPool, Vector3.zero, Quaternion.identity);
+        GameObject nObj = Object.Instantiate(objToPool, Vector3.zero, Quaternion.identity);
 
         nObj.transform.SetParent(parent);
         nObj.SetActive(true);
@@ -77,7 +89,7 @@ public class ObjectPool : Singleton<ObjectPool>
     public void Restore(GameObject objToPool)
     {
         objToPool.SetActive(false);
-        objToPool.transform.SetParent(transform);
+        objToPool.transform.SetParent(_root);
         objToPool.transform.localScale = Vector3.one;
     }
 
@@ -92,7 +104,7 @@ public class ObjectPool : Singleton<ObjectPool>
         for (int i = 0; i < listobj.Count; i++)
         {
             listobj[i].SetActive(false);
-            listobj[i].transform.parent = transform;
+            listobj[i].transform.parent = _root;
         }
     }
 

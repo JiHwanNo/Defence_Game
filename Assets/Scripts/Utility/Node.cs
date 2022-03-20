@@ -18,14 +18,17 @@ public class Node : IHeapItem<Node>
     public int Fcost { get => gCost + hCost; }
     private int heapIndex;
     public int HeapIndex {get => heapIndex; set => heapIndex = value;}
-
+    // 노드의 프리펩 정보
+    GameObject grid_Prefab;
     public Node(bool walkable, Vector3 pos, int x, int y)
     {
         this.IsWalkable = walkable;
         worldPosition = pos;
         gridX = x;
         gridY = y;
+
     }
+
 
     public int CompareTo(Node other)
     {
