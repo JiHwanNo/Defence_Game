@@ -24,7 +24,6 @@ public class PathRequestManager : MonoBehaviour
     }
     void TryProcessNext()
     {
-
         if (!isProcessingPath && pathRequestQueue.Count >0)
         {
             isProcessingPath = true;
@@ -43,12 +42,6 @@ public class PathRequestManager : MonoBehaviour
         //StartCoroutine(Restart());
     }
 
-    IEnumerator Restart()
-    {
-        yield return new WaitForSeconds(10f);
-
-        TryProcessNext();
-    }
 
     struct PathRequest
     {

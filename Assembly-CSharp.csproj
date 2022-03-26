@@ -69,9 +69,10 @@
     <Compile Include="Assets\Scripts\Utility\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\Utility\MobileOptimization.cs" />
     <Compile Include="Assets\Scripts\Utility\Node.cs" />
+    <Compile Include="Assets\Scripts\Utility\ResouceManager.cs" />
     <Compile Include="Assets\Scripts\Page_Scripts\Main_Field.cs" />
     <Compile Include="Assets\Scripts\Utility\PathManager.cs" />
-    <Compile Include="Assets\Scripts\Utility\ResouceManager.cs" />
+    <Compile Include="Assets\Scripts\Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

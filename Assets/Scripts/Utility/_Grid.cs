@@ -32,13 +32,14 @@ public class _Grid : MonoBehaviour
 
     private void Start()
     {
-        nodeRadius = 0.5f;
+        nodeRadius = 5f;
         nodeDiameter = nodeRadius * 2f;
 
         Set_Vertex();
 
-        grid_Width = Mathf.Abs(vertices[(int)Vertex.LEFT_DOWN].x - vertices[(int)Vertex.RIGHT_DOWN].x);
-        grid_Height = Mathf.Abs(vertices[(int)Vertex.LEFT_DOWN].z - vertices[(int)Vertex.LEFT_UP].z);
+        // 문제 구간
+        grid_Width = Mathf.Abs(vertices[(int)Vertex.LEFT_DOWN].x - vertices[(int)Vertex.RIGHT_DOWN].x );
+        grid_Height = Mathf.Abs(vertices[(int)Vertex.LEFT_DOWN].z - vertices[(int)Vertex.LEFT_UP].z );
         gridSize = new Vector2(grid_Width, grid_Height);
 
         gridXCount = Mathf.RoundToInt(gridSize.x / nodeDiameter);
@@ -53,11 +54,11 @@ public class _Grid : MonoBehaviour
     {
         vertices = new Vector3[(int)Vertex.MAX];
 
-        vertices[(int)Vertex.LEFT_DOWN] = new Vector3(-40 - nodeRadius, 0, -30 - nodeRadius);
-        vertices[(int)Vertex.LEFT_UP] = new Vector3(-40 - nodeRadius, 0, 190 + nodeRadius);
-        vertices[(int)Vertex.RIGHT_UP] = new Vector3(40 + nodeRadius, 0, 190 + nodeRadius);
-        vertices[(int)Vertex.RIGHT_DOWN] = new Vector3(40 + nodeRadius, 0, -30 - nodeRadius);
-        vertices[(int)Vertex.CENTER] = new Vector3(0, 0,(190+30)/2);
+        vertices[(int)Vertex.LEFT_DOWN] = new Vector3(-50 - nodeRadius, 0, -100 - nodeRadius);
+        vertices[(int)Vertex.LEFT_UP] = new Vector3(-50 - nodeRadius, 0, 100 + nodeRadius);
+        vertices[(int)Vertex.RIGHT_UP] = new Vector3(50 + nodeRadius, 0, 100 + nodeRadius);
+        vertices[(int)Vertex.RIGHT_DOWN] = new Vector3(50 + nodeRadius, 0, -100 - nodeRadius);
+        vertices[(int)Vertex.CENTER] = new Vector3(0, 0, 0);
         transform.position = vertices[(int)Vertex.CENTER];
     }
 
@@ -90,17 +91,15 @@ public class _Grid : MonoBehaviour
     /// </summary>
     private void CreateGrid()
     {
-
         grid = new Node[gridXCount, gridYCount];
         // 실질적 꼭지점의 중간 지점이어야 한다.
-        Vector3 worldBottomLeft = vertices[(int)Vertex.LEFT_DOWN] - new Vector3((gridSize.x * 0.5f), 0, (gridSize.y * 0.5f));
+        Vector3 worldBottomLeft =transform.position - new Vector3((gridSize.x * 0.5f), 0, (gridSize.y * 0.5f));
         for (int x = 0; x < gridXCount; x++)
         {
             for (int y = 0; y < gridYCount; y++)
             {
                 Vector3 worldPosition = worldBottomLeft + new Vector3((x * nodeDiameter + nodeRadius), 0, (y * nodeDiameter + nodeRadius));
                 bool walkable = !(Physics.CheckSphere(worldPosition, nodeRadius, unwalkableMask));
-
 
                 grid[x, y] = new Node(walkable, worldPosition, x, y);
             }
@@ -113,6 +112,8 @@ public class _Grid : MonoBehaviour
         float percen_X = (WP.x + gridSize.x * 0.5f) / gridSize.x;
         float percen_Y = (WP.z + gridSize.y * 0.5f) / gridSize.y;
 
+        Debug.Log($"percet_X : {percen_X} , percent_Y : {percen_Y}");
+
         percen_X = Mathf.Clamp01(percen_X);
         percen_Y = Mathf.Clamp01(percen_Y);
 
@@ -124,6 +125,18 @@ public class _Grid : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Gizmos.DrawWireCube(transform.position, new Vector3(gridSize.x, 1f, gridSize.y));
+
+        if (grid != null)
+        {
+            foreach (var node in grid)
+            {
+                Gizmos.color = Color.white;
+
+                Gizmos.DrawCube(node.worldPosition, new Vector3(nodeDiameter, 1, nodeDiameter));
+            }
+        }
+        Gizmos.color = Color.black;
         Gizmos.DrawWireCube(transform.position, new Vector3(gridSize.x, 1f, gridSize.y));
     }
 

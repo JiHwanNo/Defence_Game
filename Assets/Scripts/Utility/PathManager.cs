@@ -23,9 +23,10 @@ public class PathManager : MonoBehaviour
         Vector3[] wayPoints = new Vector3[0];
         bool pathSuccess = false; // 길 탐색 성공여부
 
+        Debug.Log($"seeker position : {seeker}");
         Node startNode = grid.GetNodeFromWorldPosition(seeker); // 출발 Node[x,y]
         Node targetNode = grid.GetNodeFromWorldPosition(target); // 도착 Node[x,y]
-
+        Debug.Log($"startNode.gridX : {startNode.gridX}, startNode.gridY : {startNode.gridY}");
         Heap<Node> openSet = new Heap<Node>(grid.MaxSize);
         HashSet<Node> closeSet = new HashSet<Node>();
 
