@@ -32,7 +32,7 @@ public class _Grid : MonoBehaviour
 
     private void Start()
     {
-        nodeRadius = 5f;
+        nodeRadius = 1f;
         nodeDiameter = nodeRadius * 2f;
 
         Set_Vertex();
